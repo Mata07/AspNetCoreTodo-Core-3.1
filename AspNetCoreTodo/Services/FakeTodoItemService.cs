@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace AspNetCoreTodo.Services
 {
-    public class FakeTodoItemService : ITodoItemService
+    public class FakeTodoItemService //: ITodoItemService
     {
         public Task<bool> AddItemAsync(TodoItem newItem)
         {
