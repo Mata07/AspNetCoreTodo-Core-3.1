@@ -18,6 +18,7 @@ namespace AspNetCoreTodo.Controllers
 
         public async Task<IActionResult> Index()
         {
+            // Get to-do items from database
             var items = await _todoItemService.GetIncompleteItemsAsync();
             // Put items into a model
             var model = new TodoViewModel()
@@ -45,7 +46,22 @@ namespace AspNetCoreTodo.Controllers
             return RedirectToAction("Index");
         }
 
-      //68 stranica
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> MarkDone(Guid id)
+        {
+            if (id == Guid.Empty)
+            {
+                return RedirectToAction("Index");
+            }
+
+            var successful = await _todoItemService.MarkDoneAsync(id);
+            if (!successful)
+            {
+                return BadRequest("Could not mark item as done.");
+            }
+
+            return RedirectToAction("Index");
+        }
 
     }
 }
